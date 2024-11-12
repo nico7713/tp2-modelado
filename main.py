@@ -43,3 +43,16 @@ def obtener_mensaje(msj_id : int):
 
 def mostrar_mensajes():
     return mensajes_db
+
+
+
+# editar mensajes
+@app.put("/mensajes/{mensaje_id}", response_model=Mensaje)
+def editar_mensaje(msj_id: int, nuevo_mensaje: Mensaje):
+    for index, msj in enumerate(mensajes_db):
+        if msj.id == msj_id:
+            nuevo_mensaje.id = msj_id
+            mensajes_db[index] = nuevo_mensaje
+            return nuevo_mensaje
+    raise HTTPException(status_code=404, detail="Mensaje no encontrado.")
+
