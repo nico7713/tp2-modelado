@@ -56,3 +56,15 @@ def editar_mensaje(msj_id: int, nuevo_mensaje: Mensaje):
             return nuevo_mensaje
     raise HTTPException(status_code=404, detail="Mensaje no encontrado.")
 
+
+
+
+# eliminar mensaje
+@app.delete("/mensajes/{mensaje_id}", response_model=dict)
+
+def eliminar_mensaje(msj_id: int):
+    for index, mensaje in enumerate(mensajes_db):
+        if mensaje.id == msj_id:
+            del mensajes_db[index]
+            return {"detail": "Mensaje eliminado"}
+    raise HTTPException(status_code=404, detail="Mensaje no encontrado.") 
