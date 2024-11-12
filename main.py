@@ -28,4 +28,18 @@ def mandar_mensaje(msj:Mensaje):
     return msj
 
 
+# buscar mensaje por id
+@app.get("/mensajes/{mensaje_id}", response_model=Mensaje)
 
+def obtener_mensaje(msj_id : int):
+    for msj in mensajes_db:
+        if msj.id == msj_id:
+            return msj
+    raise HTTPException(status_code=404, detail="Mensaje no encontrado.")
+    
+
+# mostrar todos los mensajes
+@app.get("/mensajes/", response_model=list[Mensaje])
+
+def mostrar_mensajes():
+    return mensajes_db
