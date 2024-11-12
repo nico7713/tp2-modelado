@@ -17,3 +17,15 @@ app = FastAPI()
 
 # base de datos
 mensajes_db = []
+
+
+# mandar mensaje
+@app.post("/mensajes/", response_model=Mensaje) 
+
+def mandar_mensaje(msj:Mensaje):
+    msj.id = len(mensajes_db) + 1
+    mensajes_db.append(msj)
+    return msj
+
+
+
